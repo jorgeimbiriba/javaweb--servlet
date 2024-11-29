@@ -1,0 +1,157 @@
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+
+@WebServlet(name = "inserePessoaServlet", value = "/insere-pessoa")
+public class InserePessoaServlet extends HttpServlet {
+
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+//                <input id="pessoa_nome" type="text" name="nome" required>
+//                <input id="pessoa_email" type="text" name="email" required>
+//                <input type="submit" name="enviar" value="Enviar">
+//
+        String nome = request.getParameter("nome");
+        String email = request.getParameter("email");
+
+        Pessoa pessoa = new Pessoa();
+        pessoa.setNome(nome);
+        pessoa.setEmail(email);
+
+        PessoaDao pessoaDao = new PessoaDao();
+        try {
+            pessoaDao.inserir(pessoa);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset=\"utf-8\">");
+        out.println("<title>Cadastro de Pessoa</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>Cadastro de Pessoa</h1>");
+        out.println("<p>A pessoa foi incluída com sucesso:</p>");
+        out.println("<p>Nome:"+pessoa.getNome()+", Email:"+pessoa.getEmail()+"</p>");
+
+        out.println("</body>");
+        out.println("</html>");
+
+    }
+
+
+}
+
+-----------------------------
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+@WebServlet(name = "listaPessoaServlet",value = "/lista-pessoas")
+public class ListaPessoaServlet extends HttpServlet {
+
+    private List<Pessoa> pessoas = new ArrayList<>();
+
+    private void carregarPessoas()  {
+//        pessoas.add(new Pessoa("Rogerio","11111111","rogerio@email.com"));
+//        pessoas.add(new Pessoa("Maria","222222","maria@email.com"));
+//        pessoas.add(new Pessoa("João","333333","joao@email.com"));
+
+        PessoaDao pessoaDao = new PessoaDao();
+
+        try {
+
+            this.pessoas = pessoaDao.listar();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        carregarPessoas();
+
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset=\"utf-8\">");
+        out.println("<title>Lista de Pessoas</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>Lista de Pessoas</h1>");
+        out.println("<p>O cadastro de pessoa é importante para a coleta de dados...</p>");
+
+        out.println("<table border=\"1\">");
+
+        out.println("<th>Nome</th><th>CPF</th><th>Email</th>");
+        for(Pessoa pessoa: pessoas){
+            out.println("<tr><td>"+pessoa.getNome()+"</td><td>"+pessoa.getCpf()+"</td><td>"+pessoa.getEmail()+"</td></tr>");
+        }
+
+        out.println("</table>");
+
+//        <table border="1" >
+//                <th>Nome</th><th>CPF</th><th>E-mail</th>
+//                <tr><td>Rogério</td><td>111111</td><td>rogerio@email.com</td></tr>
+//                <tr><td>Maria</td><td>222222</td><td>maria@email.com</td></tr>
+//                <tr><td>João</td><td>333333</td><td>joao@email.com</td></tr>
+//                </table>
+
+
+        out.println("</body>");
+        out.println("</html>");
+
+    }
+
+}
+
+-----------------------------------------------
+
+import java.sql.SQLException;
+import java.util.List;
+
+public class TestaPessoaDao {
+
+    public static void main(String[] args) {
+        PessoaDao pessoaDao = new PessoaDao();
+        try {
+
+            List<Pessoa> pessoas = pessoaDao.listar();
+            for (Pessoa pessoa : pessoas) {
+                System.out.println("Id: " + pessoa.getId());
+                System.out.println("Nome: " + pessoa.getNome());
+                System.out.println("Email: " + pessoa.getEmail());
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+}
