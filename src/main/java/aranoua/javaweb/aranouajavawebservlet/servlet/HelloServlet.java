@@ -1,4 +1,4 @@
-package com.example.aranouajavawebservlet.servlet;
+package aranoua.javaweb.aranouajavawebservlet.servlet;
 
 import java.io.*;
 
