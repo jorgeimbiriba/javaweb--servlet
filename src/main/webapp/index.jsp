@@ -2,14 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>JSP - Gerenciamentos</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
+<h1><%= "Bem Vindo!" %>
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
-<a href="pessoa">Gerenciar Pessoas</a>
+<a href="produto">Gerenciar Produtos</a>
 <br/>
 
 </body>

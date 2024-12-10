@@ -17,7 +17,8 @@ public class TestaConexaoUtil {
 
             Connection conexao = conexaoUtil.getConexao();
 
-            String sql = "select id,nome,email from pessoa";
+            //String sql = "select id,nome,email from pessoa";
+            String sql = "select numerodetombo, nomedoequipamento, marca, modelo from produto";
 
             System.out.println("SQL:"+sql);
 
@@ -28,17 +29,16 @@ public class TestaConexaoUtil {
             if(temResultado){
                 ResultSet resultados = instrucao.getResultSet();
                 while(resultados.next()){
-                    System.out.println("ID:"+resultados.getInt("id"));
-                    System.out.println("NOME:"+resultados.getString("nome"));
+                    System.out.println("ID:"+resultados.getInt("numerodetombo"));
+                    System.out.println("NOME DO EQUIPAMENTO:"+resultados.getString("nomedoequipamento"));
+                    System.out.println("MARCA:"+resultados.getString("marca"));
+                    System.out.println("MODELO:"+resultados.getNString("modelo"));
                 }
-
             }
 
         } catch (SQLException e) {
             System.out.println("Erro:"+e.getMessage());
         }
-
-
     }
 
 }
