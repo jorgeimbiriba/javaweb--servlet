@@ -73,7 +73,6 @@ public class ProdutoServlet extends HttpServlet {
                 String numerodetombo = request.getParameter("numerodetombo");
 
                 if(numerodetombo != null && !numerodetombo.equals("0")){
-                    //Alterar
                     titulo = tituloAlterar;
                     mensagem = mensagemAlterar;
                     produto.setNumeroDeTombo(Integer.parseInt(numerodetombo));
@@ -116,7 +115,6 @@ public class ProdutoServlet extends HttpServlet {
 
         try {
 
-            //Se vier com o I D preenchido, é para mostrar o formulário de alterar.
             String numerodetombo = request.getParameter("numerodetombo");
 
             Produto produto;

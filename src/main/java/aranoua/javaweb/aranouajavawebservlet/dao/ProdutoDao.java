@@ -106,7 +106,7 @@ public class ProdutoDao {
         Statement instrucao = conexao.createStatement();
 
         String sql = "select numerodetombo, nomedoproduto, marca, modelo from produto where numerodetombo="+numerodetombo;
-        //String sql = "select id,nome,email from pessoa where id="+id;
+
 
         System.out.println("SQL:"+sql);
 
