@@ -253,8 +253,8 @@ public class ProdutoServlet extends HttpServlet {
             out.println("<p>Marca: "+produto.getMarca()+"</p>");
             out.println("<p>Modelo: "+produto.getModelo()+"</p>");
 
-            out.println("<a href='produto?acao=alterar&id="+produto.getNumeroDeTombo()+"'>Alterar</a>");
-            out.println("<a href='produto?acao=excluir&id="+produto.getNumeroDeTombo()+"'>Excluir</a>");
+            out.println("<a href='produto?acao=alterar&numerodetombo="+produto.getNumeroDeTombo()+"'>Alterar</a>");
+            out.println("<a href='produto?acao=excluir&numerodetombo="+produto.getNumeroDeTombo()+"'>Excluir</a>");
             out.println("<a href='produto'>Voltar</a>");
 
             out.println("</body>");
@@ -270,11 +270,11 @@ public class ProdutoServlet extends HttpServlet {
 
             ProdutoDao produtoDao = new ProdutoDao();
 
-//          http://localhost:8080/produto?acao=excluir&id=1
+//          http://localhost:8080/produto?acao=excluir&numerodetombo=1
 
-            String id = request.getParameter("id");
+            String numerodetombo = request.getParameter("numerodetombo");
 
-            produtoDao.excluir(Long.parseLong(id));
+            produtoDao.excluir(Long.parseLong(numerodetombo));
 
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");
